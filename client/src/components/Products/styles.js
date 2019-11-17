@@ -6,13 +6,12 @@ const Container = styled.SafeAreaView`
   height: 250px;
 `;
 const ListContainer = styled.View`
-  width: 90%;
+  width: 100%;
   background-color: #f6f6f6;
   padding: 2px;
-  margin: 20px;
-  height: 250px;
+  margin: 10px;
+  min-height: 250px;
   flex: 1 auto;
-  flex-direction: row;
 `;
 
 const DetailsContainer = styled.View`
@@ -28,9 +27,21 @@ const DetailsText = styled.Text`
 `;
 
 const Title = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   margin-left: 10px;
   align-self: flex-start;
 `;
 
-export {Container, ListContainer, DetailsContainer, DetailsText, Title};
+const ProductImage = styled.Image`
+  width: 100%;
+  height: 150px;
+`;
+
+export {
+  Container,
+  ListContainer,
+  DetailsContainer,
+  DetailsText,
+  Title,
+  ProductImage,
+};
