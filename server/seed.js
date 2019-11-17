@@ -1,11 +1,11 @@
 const { merchants } = require("./mockMerchantData");
-const Merchant = require("./model/MerchantModel");
-const Product = require("./model/productModel");
+const Merchant = require("./model/merchant");
+const Product = require("./model/product");
 
 const seed = async () => {
   if (
-    await Merchant.countDocuments() === 0 &&
-    await Product.countDocuments() === 0
+    (await Merchant.countDocuments()) === 0 &&
+    (await Product.countDocuments()) === 0
   ) {
     merchants.forEach(({ products, ...restMerchant }) => {
       const MerchantObject = new Merchant(restMerchant);
