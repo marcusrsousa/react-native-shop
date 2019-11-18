@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.SafeAreaView`
   flex: 1;
+  flex-direction: row;
   height: 250px;
 `;
 const ListContainer = styled.View`

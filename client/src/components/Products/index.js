@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {Button} from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
@@ -13,8 +13,8 @@ import {
 } from './styles';
 
 const GET_PRODUCTS = gql`
-  query Products($offset: Int!, $limit: Int!) {
-    products(filters: {}, offset: $offset, limit: $limit) {
+  query Products($filters: FilterProduct, $offset: Int!, $limit: Int!) {
+    products(filters: $filters, offset: $offset, limit: $limit) {
       id
       name
       price
@@ -26,7 +26,23 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const renderItem = ({item}) => {
+const cancelFilter = (filters, setVariables) => {
+  if (!Object.keys(filters).length) return;
+  return (
+    <Text
+      onPress={() =>
+        setVariables({
+          filters: {},
+          offset: 0,
+          limit: 10,
+        })
+      }>
+      Cancel Filter X
+    </Text>
+  );
+};
+
+const renderItem = (item, navigation) => {
   return (
     <ListContainer>
       <ProductImage source={{uri: item.image}}></ProductImage>
@@ -44,7 +60,12 @@ const renderItem = ({item}) => {
         <Text style={{alignSelf: 'flex-end', fontSize: 20, fontWeight: '600'}}>
           Price: $ {item && item.price}
         </Text>
-        <Button title="Buy" type="solid" style={{margin: 5}} />
+        <Button
+          title="Buy"
+          type="solid"
+          onPress={() => navigation.push('ProductDetail', {item})}
+          style={{margin: 5}}
+        />
       </DetailsContainer>
     </ListContainer>
   );
@@ -53,21 +74,43 @@ const renderItem = ({item}) => {
 const keyExtractor = item => item.id;
 
 const ProductsList = ({navigation}) => {
-  const {loading, error, data, fetchMore} = useQuery(GET_PRODUCTS, {
-    variables: {offset: 0, limit: 10},
+  const [variables, setVariables] = useState({
+    filters: {},
+    offset: 0,
+    limit: 10,
+  });
+  const {loading, error, data, refetch, fetchMore} = useQuery(GET_PRODUCTS, {
+    variables,
     notifyOnNetworkStatusChange: true,
   });
+
+  useEffect(() => {
+    refetch(variables);
+  }, [variables]);
 
   if (!data && loading) return <Text> Loading... </Text>;
   const {products} = data || [];
   if (data && data.products)
     return (
       <Container>
+        <Button
+          title="Filter"
+          onPress={() =>
+            navigation.push('Filters', {
+              onFilter: filters =>
+                setVariables({filters, offset: 0, limit: 10}),
+            })
+          }
+          type="solid"
+          style={{margin: 5}}
+        />
+        {cancelFilter(variables.filters, setVariables)}
+
         <FlatList
           horizontal={false}
           numColumns={2}
           data={products}
-          renderItem={renderItem}
+          renderItem={({item}) => renderItem(item, navigation)}
           keyExtractor={keyExtractor}
           onEndReached={() =>
             fetchMore({

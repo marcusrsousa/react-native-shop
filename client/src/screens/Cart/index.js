@@ -1,14 +1,14 @@
 import React from 'react';
 import {View} from 'react-native';
 
-const Chart = () => {
+const Cart = () => {
   return <View></View>;
 };
 
-Chart.navigationOptions = () => {
+Cart.navigationOptions = () => {
   return {
-    title: 'Chart',
+    title: 'Cart',
   };
 };
 
-export default Chart;
+export default Cart;

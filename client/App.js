@@ -4,7 +4,9 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import client from './src/createClient';
 import Products from './src/components/Products';
-import Chart from './src/screens/Chart';
+import Cart from './src/screens/Cart';
+import ProductDetail from './src/components/ProductDetail';
+import Filters from './src/components/Filters';
 
 const RootStack = createStackNavigator(
   {
@@ -12,9 +14,17 @@ const RootStack = createStackNavigator(
       screen: Products,
       navigationOptions: Products.navigationOptions,
     },
-    Chart: {
-      screen: Chart,
-      navigationOptions: Chart.navigationOptions,
+    Filters: {
+      screen: Filters,
+      navigationOptions: Filters.navigationOptions,
+    },
+    ProductDetail: {
+      screen: ProductDetail,
+      navigationOptions: ProductDetail.navigationOptions,
+    },
+    Cart: {
+      screen: Cart,
+      navigationOptions: Cart.navigationOptions,
     },
   },
   {
