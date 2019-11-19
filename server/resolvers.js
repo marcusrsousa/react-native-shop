@@ -1,12 +1,35 @@
 const Product = require("./model/product");
+const Merchant = require("./model/merchant");
 const User = require("./model/user");
 
 const resolvers = {
   Query: {
-    products: async (root, { filters, offset, limit }) =>
-      await Product.find(filters)
+    products: async (root, { filters, offset, limit }) => {
+      const { merchantName, maxPrice, minPrice, ...productFilters } = filters;
+      const merchantFilters = {
+        publishedState: true
+      };
+
+      if (merchantName) {
+        merchantFilters.name = merchantName;
+      }
+
+      merchants = await Merchant.find(merchantFilters);
+      const price = { $gte: filters.minPrice || 0 };
+
+      if (maxPrice) {
+        price.$lte = maxPrice;
+      }
+
+      return await Product.find({
+        ...productFilters,
+        merchant: { $in: merchants },
+        price
+      })
+        .populate("merchant")
         .limit(limit)
-        .skip(offset),
+        .skip(offset);
+    },
     user: async (root, { user }) =>
       User.findOne(user).then(result => ({ userId: result._id }))
   },

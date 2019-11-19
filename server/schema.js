@@ -19,7 +19,7 @@ const typeDefs = gql`
     companyDescription: String
   }
   type Product {
-    belongsToBrand: Int
+    brand: String
     id: String
     name: String
     price: Float
@@ -28,11 +28,15 @@ const typeDefs = gql`
     size: String
     quantity: Int
     image: String
+    merchant: Merchant!
   }
 
   input FilterProduct {
     name: String
-    price: Float
+    brand: String
+    merchantName: String
+    minPrice: Float
+    maxPrice: Float
     description: String
     color: String
     size: String
