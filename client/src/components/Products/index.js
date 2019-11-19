@@ -22,21 +22,21 @@ const GET_PRODUCTS = gql`
       color
       size
       image
+      quantity
     }
   }
 `;
 
+const VARIABLES_INITIAL_VALUE = {
+  filters: {},
+  offset: 0,
+  limit: 10,
+};
+
 const cancelFilter = (filters, setVariables) => {
   if (!Object.keys(filters).length) return;
   return (
-    <Text
-      onPress={() =>
-        setVariables({
-          filters: {},
-          offset: 0,
-          limit: 10,
-        })
-      }>
+    <Text onPress={() => setVariables(VARIABLES_INITIAL_VALUE)}>
       Cancel Filter X
     </Text>
   );
@@ -58,7 +58,7 @@ const renderItem = (item, navigation) => {
           <Text>Color: {item && item.color}</Text>
         </View>
         <Text style={{alignSelf: 'flex-end', fontSize: 20, fontWeight: '600'}}>
-          Price: $ {item && item.price}
+          Price: $ {item && item.price.toFixed(2)}
         </Text>
         <Button
           title="Buy"
@@ -74,11 +74,7 @@ const renderItem = (item, navigation) => {
 const keyExtractor = item => item.id;
 
 const ProductsList = ({navigation}) => {
-  const [variables, setVariables] = useState({
-    filters: {},
-    offset: 0,
-    limit: 10,
-  });
+  const [variables, setVariables] = useState(VARIABLES_INITIAL_VALUE);
   const {loading, error, data, refetch, fetchMore} = useQuery(GET_PRODUCTS, {
     variables,
     notifyOnNetworkStatusChange: true,
@@ -139,6 +135,9 @@ const ProductsList = ({navigation}) => {
 ProductsList.navigationOptions = ({navigation}) => {
   return {
     title: 'Products',
+    headerRight: () => (
+      <Button onPress={() => navigation.push('Cart')} title="+1" color="blue" />
+    ),
   };
 };
 

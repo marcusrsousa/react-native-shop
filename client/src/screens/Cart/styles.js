@@ -5,12 +5,13 @@ const Container = styled.SafeAreaView`
   background-color: #f6f6f6;
   padding: 2px;
   margin: 10px;
-  min-height: 250px;
+  min-height: 180px;
   flex: 1 auto;
 `;
 
 const DetailsContainer = styled.View`
   flex: 1;
+  flex-direction: row;
 `;
 
 const DetailsText = styled.Text`
@@ -22,15 +23,13 @@ const DetailsText = styled.Text`
 
 const Title = styled.Text`
   font-size: 20px;
-  margin-left: 10px;
-  align-self: flex-start;
   margin-bottom: 20px;
   font-weight: bold;
 `;
 
 const ProductImage = styled.Image`
-  width: 96%;
-  height: 250px;
+  flex: 1;
+  height: 100px;
 `;
 
 const Price = styled.Text`
