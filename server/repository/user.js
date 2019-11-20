@@ -1,7 +1,12 @@
 const User = require("../model/user");
 
 const getUser = async user =>
-  User.findOne(user).then(({ _id, name }) => ({ userId: _id, name }));
+  User.findOne(user)
+    .then(user => {
+      if (!user) throw new Error("User not Found!");
+      return user;
+    })
+    .then(({ _id, name }) => ({ userId: _id, name }));
 
 const addUser = async user => {
   const savedUser = await User.findOne({ email: user.email });
