@@ -23,6 +23,8 @@ const DetailsText = styled.Text`
 
 const Title = styled.Text`
   font-size: 20px;
+  margin-left: 10px;
+  align-self: flex-start;
   margin-bottom: 20px;
   font-weight: bold;
 `;

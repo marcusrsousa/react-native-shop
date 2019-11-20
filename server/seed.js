@@ -3,8 +3,6 @@ const Merchant = require("./model/merchant");
 const Product = require("./model/product");
 
 const seed = async () => {
-  //await Merchant.collection.drop();
-  //await Product.collection.drop();
   if (
     (await Merchant.countDocuments()) === 0 &&
     (await Product.countDocuments()) === 0

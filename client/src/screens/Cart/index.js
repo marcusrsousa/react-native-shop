@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, FlatList, Text, Picker, Button} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  Button,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {
   Container,
   DetailsContainer,
@@ -8,27 +15,18 @@ import {
   ProductImage,
   Price,
 } from './styles';
+import Quantity from '../../components/Quantity';
 import {getCart, removeItem, setCart} from '../../storage/cart';
+import {getUser} from '../../storage/user';
 
-const Quantity = ({maxQuantity, value, onChange}) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-    }}>
-    <Text style={{alignSelf: 'center', fontSize: 20}}>Quantity: </Text>
-    <Picker
-      style={{width: 100}}
-      selectedValue={value}
-      onValueChange={n => onChange(n)}>
-      {[...Array(maxQuantity).keys()].map(n => {
-        const num = n + 1;
-        const label = num.toString();
-        return <Picker.Item key={n} label={label} value={num} />;
-      })}
-    </Picker>
-  </View>
-);
+const buy = async navigation => {
+  const user = await getUser();
+  if (user) {
+    navigation.push('Order');
+    return;
+  }
+  navigation.push('Login');
+};
 
 const renderItem = (item, setProductToUpdate, setProductToRemove) => {
   return (
@@ -40,6 +38,11 @@ const renderItem = (item, setProductToUpdate, setProductToRemove) => {
           <DetailsText>Size: {item && item.size}</DetailsText>
           <DetailsText>Color: {item && item.color}</DetailsText>
         </View>
+        <TouchableOpacity
+          style={{marginRight: 10}}
+          onPress={() => setProductToRemove(item)}>
+          <Image source={require('../../../assets/trash.png')} />
+        </TouchableOpacity>
       </DetailsContainer>
       <View
         style={{
@@ -77,14 +80,13 @@ const showTotal = cart => {
   );
 };
 
-const Cart = () => {
+const Cart = ({navigation}) => {
   const [cart, setProducts] = useState([]);
   const [productToUpdate, setProductToUpdate] = useState({});
   const [productToRemove, setProductToRemove] = useState({});
 
   const fetchData = async () => {
     const c = await getCart();
-    console.warn(c);
     if (c.length) setProducts(c);
   };
 
@@ -123,8 +125,8 @@ const Cart = () => {
         {cart && showTotal(cart)}
 
         <Button
-          title="Checkout"
-          onPress={() => console.warn('ok')}
+          title="BUY"
+          onPress={() => buy(navigation)}
           type="solid"
           style={{margin: 5}}
         />

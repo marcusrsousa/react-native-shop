@@ -3,44 +3,32 @@ import styled from 'styled-components';
 const Container = styled.SafeAreaView`
   flex: 1;
   height: 250px;
+  padding-top: 50px;
+  justify-content: space-between;
 `;
-const ListContainer = styled.View`
-  width: 100%;
-  background-color: #f6f6f6;
-  padding: 2px;
-  margin: 10px;
-  min-height: 250px;
+const Form = styled.ScrollView`
   flex: 1 auto;
 `;
 
-const DetailsContainer = styled.View`
+const PriceContainer = styled.View`
   flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 `;
 
-const DetailsText = styled.Text`
-  font-size: 16px;
-  margin-left: 10px;
-  align-self: flex-start;
+const FormInput = styled.TextInput`
+  width: 90%;
+  margin-left: 5%;
+  font-size: 18px;
+  height: 60px;
+  margin-bottom: 20px;
 `;
 
-const Title = styled.Text`
-  font-size: 16px;
-  margin-left: 10px;
-  align-self: flex-start;
+const Label = styled.Text`
+  font-size: 18px;
+  margin-top: 20px;
+  align-self: baseline;
 `;
 
-const ProductImage = styled.Image`
-  width: 100%;
-  height: 150px;
-`;
-
-export {
-  Container,
-  ListContainer,
-  DetailsContainer,
-  DetailsText,
-  Title,
-  ProductImage,
-};
+export {Container, Form, PriceContainer, FormInput, Label};

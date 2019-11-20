@@ -44,12 +44,27 @@ const typeDefs = gql`
 
   type User {
     userId: String
+    name: String
   }
 
   input UserInput {
     name: String
     email: String!
     password: String!
+  }
+
+  type Order {
+    id: String
+  }
+
+  input ProductOrder {
+    id: String!
+    qtyToBuy: Int!
+  }
+
+  input OrderInput {
+    userId: String
+    products: [ProductOrder]!
   }
 
   type Query {
@@ -59,6 +74,7 @@ const typeDefs = gql`
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
     addUser(user: UserInput!): User
+    addOrder(order: OrderInput!): Order
   }
 `;
 

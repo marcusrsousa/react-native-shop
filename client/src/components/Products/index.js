@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, View, TouchableOpacity, Image} from 'react-native';
 import {Button} from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -8,9 +8,13 @@ import {
   ListContainer,
   DetailsContainer,
   Title,
-  DetailsText,
+  LineDetails,
   ProductImage,
+  Link,
+  Price,
 } from './styles';
+import {getCart} from '../../storage/cart';
+import Notification from '../../Notification';
 
 const GET_PRODUCTS = gql`
   query Products($filters: FilterProduct, $offset: Int!, $limit: Int!) {
@@ -23,6 +27,10 @@ const GET_PRODUCTS = gql`
       size
       image
       quantity
+      brand
+      merchant {
+        name
+      }
     }
   }
 `;
@@ -30,43 +38,40 @@ const GET_PRODUCTS = gql`
 const VARIABLES_INITIAL_VALUE = {
   filters: {},
   offset: 0,
-  limit: 10,
+  limit: 20,
+};
+
+const handleCart = async navigation => {
+  const cart = await getCart();
+  if (!cart || cart.length === 0) {
+    Notification.show('Cart is empty!');
+    return;
+  }
+  navigation.push('Cart');
 };
 
 const cancelFilter = (filters, setVariables) => {
   if (!Object.keys(filters).length) return;
   return (
-    <Text onPress={() => setVariables(VARIABLES_INITIAL_VALUE)}>
-      Cancel Filter X
-    </Text>
+    <Link onPress={() => setVariables(VARIABLES_INITIAL_VALUE)}>X Filter</Link>
   );
 };
 
 const renderItem = (item, navigation) => {
   return (
     <ListContainer>
-      <ProductImage source={{uri: item.image}}></ProductImage>
-      <DetailsContainer>
-        <Title>{item && item.name}</Title>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 10,
-          }}>
-          <Text>Size: {item && item.size}</Text>
-          <Text>Color: {item && item.color}</Text>
-        </View>
-        <Text style={{alignSelf: 'flex-end', fontSize: 20, fontWeight: '600'}}>
-          Price: $ {item && item.price.toFixed(2)}
-        </Text>
-        <Button
-          title="Buy"
-          type="solid"
-          onPress={() => navigation.push('ProductDetail', {item})}
-          style={{margin: 5}}
-        />
-      </DetailsContainer>
+      <TouchableOpacity
+        onPress={() => navigation.push('ProductDetail', {item})}>
+        <ProductImage source={{uri: item.image}}></ProductImage>
+        <DetailsContainer>
+          <Title>{item && item.name}</Title>
+          <LineDetails>
+            <Text>Size: {item && item.size}</Text>
+            <Text>Color: {item && item.color}</Text>
+          </LineDetails>
+          <Price>Price: $ {item && item.price.toFixed(2)}</Price>
+        </DetailsContainer>
+      </TouchableOpacity>
     </ListContainer>
   );
 };
@@ -81,7 +86,7 @@ const ProductsList = ({navigation}) => {
   });
 
   useEffect(() => {
-    refetch(variables);
+    if (refetch && variables) refetch(variables);
   }, [variables]);
 
   if (!data && loading) return <Text> Loading... </Text>;
@@ -93,12 +98,12 @@ const ProductsList = ({navigation}) => {
           title="Filter"
           onPress={() =>
             navigation.push('Filters', {
+              activeFilters: variables.filters,
               onFilter: filters =>
-                setVariables({filters, offset: 0, limit: 10}),
+                setVariables({filters, offset: 0, limit: 20}),
             })
           }
           type="solid"
-          style={{margin: 5}}
         />
         {cancelFilter(variables.filters, setVariables)}
 
@@ -136,7 +141,11 @@ ProductsList.navigationOptions = ({navigation}) => {
   return {
     title: 'Products',
     headerRight: () => (
-      <Button onPress={() => navigation.push('Cart')} title="+1" color="blue" />
+      <TouchableOpacity
+        style={{marginRight: 10}}
+        onPress={() => handleCart(navigation)}>
+        <Image source={require('../../../assets/cart.png')} />
+      </TouchableOpacity>
     ),
   };
 };

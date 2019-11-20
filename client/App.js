@@ -7,6 +7,9 @@ import Products from './src/components/Products';
 import Cart from './src/screens/Cart';
 import ProductDetail from './src/components/ProductDetail';
 import Filters from './src/components/Filters';
+import Login from './src/screens/Login';
+import Register from './src/screens/Register';
+import Order from './src/screens/Order';
 
 const RootStack = createStackNavigator(
   {
@@ -25,6 +28,18 @@ const RootStack = createStackNavigator(
     Cart: {
       screen: Cart,
       navigationOptions: Cart.navigationOptions,
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: Login.navigationOptions,
+    },
+    Register: {
+      screen: Register,
+      navigationOptions: Register.navigationOptions,
+    },
+    Order: {
+      screen: Order,
+      navigationOptions: Order.navigationOptions,
     },
   },
   {

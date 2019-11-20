@@ -39,4 +39,22 @@ const Price = styled.Text`
   margin-right: 15px;
 `;
 
-export {Container, DetailsContainer, DetailsText, Title, ProductImage, Price};
+const PriceView = styled.View`
+  flex-direction: row;
+  border-top-width: 1px;
+  border-top-color: #ddd;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  padding-top: 10px;
+`;
+
+export {
+  Container,
+  DetailsContainer,
+  DetailsText,
+  Title,
+  ProductImage,
+  PriceView,
+  Price,
+};

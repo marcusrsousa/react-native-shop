@@ -1,6 +1,7 @@
 const Product = require("./model/product");
 const Merchant = require("./model/merchant");
 const User = require("./model/user");
+const Order = require("./model/order");
 
 const resolvers = {
   Query: {
@@ -31,7 +32,7 @@ const resolvers = {
         .skip(offset);
     },
     user: async (root, { user }) =>
-      User.findOne(user).then(result => ({ userId: result._id }))
+      User.findOne(user).then(({ _id, name }) => ({ userId: _id, name }))
   },
   Mutation: {
     addUser: async (root, { user }) => {
@@ -42,6 +43,9 @@ const resolvers = {
       return await new User(user)
         .save()
         .then(result => ({ userId: result._id }));
+    },
+    addOrder: async (root, { order }) => {
+      return await new Order(order).save().then(result => ({ id: result._id }));
     }
   }
 };
