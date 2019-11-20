@@ -7,10 +7,14 @@ const Container = styled.SafeAreaView`
   justify-content: center;
 `;
 
+const Form = styled.ScrollView`
+  flex: 1;
+`;
+
 const FormInput = styled.TextInput`
   font-size: 18px;
   height: 60px;
   margin-bottom: 20px;
 `;
 
-export {Container, FormInput};
+export {Container, Form, FormInput};

@@ -87,7 +87,6 @@ const Filters = ({navigation}) => {
           navigation.goBack();
         }}
         type="solid"
-        style={{margin: 5}}
       />
     </Container>
   );

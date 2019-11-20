@@ -5,8 +5,13 @@ const Container = styled.SafeAreaView`
   background-color: #f6f6f6;
   padding: 2px;
   margin: 10px;
-  min-height: 180px;
+  min-height: 130px;
   flex: 1 auto;
+`;
+
+const ListContainer = styled.View`
+  flex: 1;
+  justify-content: space-between;
 `;
 
 const DetailsContainer = styled.View`
@@ -20,7 +25,7 @@ const PriceView = styled.View`
   border-top-color: #ddd;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 10px;
   padding-top: 10px;
 `;
 
@@ -52,6 +57,7 @@ const Price = styled.Text`
 
 export {
   Container,
+  ListContainer,
   DetailsContainer,
   PriceView,
   DetailsText,

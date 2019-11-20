@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {Button} from 'react-native';
-import {Container, FormInput} from './styles';
+import {Container, Form, FormInput} from './styles';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {addUser} from '../../storage/user';
+import Notification from '../../Notification';
 
 const ADD_USER = gql`
   mutation AddUser($user: UserInput!) {
@@ -54,32 +55,34 @@ const Register = ({navigation}) => {
 
   return (
     <Container>
-      <FormInput
-        underlineColorAndroid={'blue'}
-        placeholder="name"
-        value={name}
-        onChangeText={text => setName(text)}
-      />
-      <FormInput
-        underlineColorAndroid={'blue'}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <FormInput
-        underlineColorAndroid={'blue'}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={text => setPassword(text)}
-      />
-      <FormInput
-        underlineColorAndroid={'blue'}
-        placeholder="Retype Password"
-        secureTextEntry={true}
-        value={reTypedpassword}
-        onChangeText={text => setRetypedPassword(text)}
-      />
+      <Form>
+        <FormInput
+          underlineColorAndroid={'blue'}
+          placeholder="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+        />
+        <FormInput
+          underlineColorAndroid={'blue'}
+          placeholder="E-mail"
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+        <FormInput
+          underlineColorAndroid={'blue'}
+          placeholder="Password"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={text => setPassword(text)}
+        />
+        <FormInput
+          underlineColorAndroid={'blue'}
+          placeholder="Retype Password"
+          secureTextEntry={true}
+          value={reTypedpassword}
+          onChangeText={text => setRetypedPassword(text)}
+        />
+      </Form>
       <Button
         title="Register"
         onPress={() =>

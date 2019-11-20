@@ -86,7 +86,7 @@ const ProductsList = ({navigation}) => {
   });
 
   useEffect(() => {
-    if (refetch && variables) refetch(variables);
+    if (data && !loading) refetch(variables);
   }, [variables]);
 
   if (!data && loading) return <Text> Loading... </Text>;

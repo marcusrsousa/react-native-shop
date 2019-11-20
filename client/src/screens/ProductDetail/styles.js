@@ -14,7 +14,7 @@ const DetailsContainer = styled.View`
 `;
 
 const DetailsText = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   margin-left: 10px;
   align-self: flex-start;
   margin-bottom: 10px;
@@ -24,7 +24,7 @@ const Title = styled.Text`
   font-size: 20px;
   margin-left: 10px;
   align-self: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: bold;
 `;
 
@@ -45,8 +45,8 @@ const PriceView = styled.View`
   border-top-color: #ddd;
   justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
-  padding-top: 10px;
+  margin-top: 10px;
+  padding-top: 5px;
 `;
 
 export {

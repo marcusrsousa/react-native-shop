@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {
   Container,
+  ListContainer,
   DetailsContainer,
   PriceView,
   Title,
@@ -105,7 +106,7 @@ const Cart = ({navigation}) => {
 
   if (!cart.length) return <Text> Chart Empty </Text>;
   return (
-    <View style={{flex: 1, justifyContent: 'space-between'}}>
+    <ListContainer>
       <FlatList
         data={cart}
         renderItem={({item}) =>
@@ -123,7 +124,7 @@ const Cart = ({navigation}) => {
           style={{margin: 5}}
         />
       </View>
-    </View>
+    </ListContainer>
   );
 };
 
