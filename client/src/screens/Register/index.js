@@ -13,10 +13,35 @@ const ADD_USER = gql`
   }
 `;
 
+const validateForm = (name, email, password, reTypedpassword) => {
+  if (!name) {
+    Notification.show('Name is Required');
+    return false;
+  }
+
+  if (!email) {
+    Notification.show('Email is Required');
+    return false;
+  }
+
+  if (!password) {
+    Notification.show('Password is Required');
+    return false;
+  }
+
+  if (password !== reTypedpassword) {
+    Notification.show('Passwords are Different');
+    return false;
+  }
+
+  return true;
+};
+
 const Register = ({navigation}) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [reTypedpassword, setRetypedPassword] = useState();
 
   const [addNewUser, {data}] = useMutation(ADD_USER);
 
@@ -44,12 +69,21 @@ const Register = ({navigation}) => {
       <FormInput
         underlineColorAndroid={'blue'}
         placeholder="Password"
+        secureTextEntry={true}
         value={password}
         onChangeText={text => setPassword(text)}
+      />
+      <FormInput
+        underlineColorAndroid={'blue'}
+        placeholder="Retype Password"
+        secureTextEntry={true}
+        value={reTypedpassword}
+        onChangeText={text => setRetypedPassword(text)}
       />
       <Button
         title="Register"
         onPress={() =>
+          validateForm(name, email, password, reTypedpassword) &&
           addNewUser({
             variables: {user: {name, email, password}},
           })

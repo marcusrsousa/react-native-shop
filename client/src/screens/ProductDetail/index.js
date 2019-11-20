@@ -10,7 +10,7 @@ import {
   Price,
 } from './styles';
 
-import Quantity from '../Quantity';
+import Quantity from '../../components/Quantity';
 import {addCart} from '../../storage/cart';
 
 const add = async (navigation, item) => {

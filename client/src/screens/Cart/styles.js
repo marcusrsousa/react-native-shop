@@ -14,6 +14,16 @@ const DetailsContainer = styled.View`
   flex-direction: row;
 `;
 
+const PriceView = styled.View`
+  flex-direction: row;
+  border-top-width: 1px;
+  border-top-color: #ddd;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  padding-top: 10px;
+`;
+
 const DetailsText = styled.Text`
   font-size: 18px;
   margin-left: 10px;
@@ -40,4 +50,12 @@ const Price = styled.Text`
   margin-right: 15px;
 `;
 
-export {Container, DetailsContainer, DetailsText, Title, ProductImage, Price};
+export {
+  Container,
+  DetailsContainer,
+  PriceView,
+  DetailsText,
+  Title,
+  ProductImage,
+  Price,
+};

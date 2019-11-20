@@ -15,6 +15,20 @@ const GET_USER = gql`
   }
 `;
 
+const validateLogin = (email, password) => {
+  if (!email) {
+    Notification.show('Email is Required');
+    return false;
+  }
+
+  if (!password) {
+    Notification.show('Password is Required');
+    return false;
+  }
+
+  return true;
+};
+
 const Login = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -43,12 +57,14 @@ const Login = ({navigation}) => {
       <FormInput
         underlineColorAndroid={'blue'}
         placeholder="Password"
+        secureTextEntry={true}
         value={password}
         onChangeText={text => setPassword(text)}
       />
       <Button
         title="Login"
         onPress={() =>
+          validateLogin(email, password) &&
           getUser({
             variables: {user: {email, password}},
           })

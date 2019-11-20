@@ -10,6 +10,7 @@ import {
 import {
   Container,
   DetailsContainer,
+  PriceView,
   Title,
   DetailsText,
   ProductImage,
@@ -44,16 +45,7 @@ const renderItem = (item, setProductToUpdate, setProductToRemove) => {
           <Image source={require('../../../assets/trash.png')} />
         </TouchableOpacity>
       </DetailsContainer>
-      <View
-        style={{
-          flexDirection: 'row',
-          borderTopWidth: 1,
-          borderTopColor: '#ddd',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 5,
-          paddingTop: 5,
-        }}>
+      <PriceView>
         <Quantity
           maxQuantity={item.quantity}
           value={item.qtyToBuy}
@@ -62,7 +54,7 @@ const renderItem = (item, setProductToUpdate, setProductToRemove) => {
         <Price>
           Price: $ {item && (item.qtyToBuy * item.price).toFixed(2)}
         </Price>
-      </View>
+      </PriceView>
     </Container>
   );
 };
